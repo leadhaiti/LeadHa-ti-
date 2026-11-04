@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12345a">
+<title>LEADHAÏTI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f4f8;color:#18304b}
+header{background:#12345a;color:white;padding:22px 16px}
+header h1{margin:0;font-size:27px}
+header p{margin:7px 0 0}
+main{padding:16px;max-width:750px;margin:auto}
+.card{background:white;padding:17px;margin:14px 0;border-radius:12px;box-shadow:0 2px 8px #00000012}
+h2{font-size:19px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.menu{background:#e8f0fa;padding:16px 8px;border-radius:10px;text-align:center;font-weight:bold;color:#12345a}
+input,select,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ccd5df;border-radius:8px;font-size:15px}
+button{background:#12345a;color:white;border:0;font-weight:bold}
+button:active{opacity:.8}
+.secondary{background:#27744c}
+.item{padding:12px;border-bottom:1px solid #ddd}
+small{color:#65758a}
+</style>
+</head>
+<body>
+<header>
+<h1>LEADHAÏTI</h1>
+<p>Centre de formation et de développement</p>
+</header>
+<main>
+<div class="card">
+<h2>Bienvenue sur LEADHAÏTI</h2>
+<p>Plateforme de gestion des formations et des étudiants.</p>
+</div>
+
+<div class="card">
+<h2>Tableau de bord</h2>
+<div class="grid">
+<div class="menu">🎓<br>Étudiants</div>
+<div class="menu">📚<br>Formations</div>
+<div class="menu">📋<br>Présences</div>
+<div class="menu">💰<br>Paiements</div>
+<div class="menu">🏆<br>Certificats</div>
+<div class="menu">👥<br>Personnel</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Nos formations</h2>
+<div class="item">🇬🇧 Anglais</div>
+<div class="item">🇪🇸 Espagnol</div>
+<div class="item">🚗 Auto-école</div>
+<div class="item">🌱 Atelier écologique</div>
+<div class="item">❄️ Climatisation</div>
+<div class="item">🧱 Carrelage</div>
+</div>
+
+<div class="card">
+<h2>Inscription d'un étudiant</h2>
+<form id="inscription">
+<input id="nom" placeholder="Nom complet" required>
+<input id="telephone" placeholder="Téléphone" required>
+<input id="adresse" placeholder="Adresse">
+<select id="formation" required>
+<option value="">Choisir une formation</option>
+<option>Anglais</option>
+<option>Espagnol</option>
+<option>Auto-école</option>
+<option>Atelier écologique</option>
+<option>Climatisation</option>
+<option>Carrelage</option>
+</select>
+<button type="submit">Enregistrer l'étudiant</button>
+</form>
+</div>
+
+<div class="card">
+<h2>Liste des étudiants</h2>
+<div id="liste"><small>Aucun étudiant enregistré.</small></div>
+</div>
+
+<p style="text-align:center;color:#65758a">
+LEADHAÏTI © 2026<br>
+Former aujourd'hui, construire demain.
+</p>
+</main>
+<script>
+let etudiants=JSON.parse(localStorage.getItem("lead_etudiants")||"[]");
+function afficher(){
+const liste=document.getElementById("liste");
+liste.innerHTML="";
+if(!etudiants.length){
+liste.innerHTML="<small>Aucun étudiant enregistré.</small>";
+return;
+}
+etudiants.forEach((e,i)=>{
+let div=document.createElement("div");
+div.className="item";
+div.textContent=e.nom+" — "+e.formation+" — "+e.telephone;
+liste.appendChild(div);
+});
+}
+document.getElementById("inscription").addEventListener("submit",function(ev){
+ev.preventDefault();
+etudiants.push({
+nom:document.getElementById("nom").value,
+telephone:document.getElementById("telephone").value,
+adresse:document.getElementById("adresse").value,
+formation:document.getElementById("formation").value
+});
+localStorage.setItem("lead_etudiants",JSON.stringify(etudiants));
+this.reset();
+afficher();
+alert("Étudiant enregistré !");
+});
+afficher();
+</script>
+</body>
+</html>
