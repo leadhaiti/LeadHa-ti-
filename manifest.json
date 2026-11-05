@@ -1,1 +1,23 @@
-
+{
+  "name": "LEADHAÏTI",
+  "short_name": "LEADHAÏTI",
+  "description": "Application officielle de LEADHAÏTI",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#006633",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
