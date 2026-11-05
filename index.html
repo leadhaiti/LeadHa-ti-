@@ -1,32 +1,98 @@
-
 <!DOCTYPE html>
 <html lang="fr">
-  <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#0b6b3a">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LEADHAÏTI</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b6b3a">
+
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#172554}
-header{background:#123b32;color:white;text-align:center;padding:22px}
+*{box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  background:#f1f5f9;
+  color:#172554;
+}
+header{
+  background:#123b32;
+  color:white;
+  text-align:center;
+  padding:22px;
+}
 header h1{margin:0}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#185c49}
-nav button{background:none;color:white;border:0;padding:13px;font-size:15px}
-main{padding:18px;max-width:850px;margin:auto}
-section{background:white;padding:18px;margin:15px 0;border-radius:10px;box-shadow:0 2px 8px #0001}
-input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
-.action{background:#176b50;color:white;border:0;padding:12px;border-radius:6px;width:100%;margin-top:8px}
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  background:#185c49;
+}
+nav button{
+  background:none;
+  color:white;
+  border:0;
+  padding:13px;
+  font-size:15px;
+  cursor:pointer;
+}
+nav button:hover{background:#123b32}
+main{
+  padding:18px;
+  max-width:850px;
+  margin:auto;
+}
+section{
+  background:white;
+  padding:18px;
+  margin:15px 0;
+  border-radius:10px;
+  box-shadow:0 2px 8px #0001;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+.action{
+  background:#176b50;
+  color:white;
+  border:0;
+  padding:12px;
+  border-radius:6px;
+  width:100%;
+  margin-top:8px;
+  cursor:pointer;
+}
 .hidden{display:none}
+.item{
+  border-bottom:1px solid #ddd;
+  padding:10px 0;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#555;
+}
+@media print{
+  nav,.no-print,header{display:none}
+  body{background:white}
+  section{box-shadow:none}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>LEADHAÏTI</h1>
 <p>LEAD TRAINING CENTER</p>
 <p>Formation • Discipline • Excellence</p>
 </header>
-<nav>
+
+<nav class="no-print">
 <button onclick="show('home')">Accueil</button>
 <button onclick="show('students')">Étudiants</button>
 <button onclick="show('attendance')">Présences</button>
@@ -34,13 +100,17 @@ input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
 <button onclick="show('training')">Formations</button>
 <button onclick="show('certificates')">Certificats</button>
 </nav>
+
 <main>
+
 <section id="home">
 <h2>Bienvenue sur LEADHAÏTI</h2>
 <p>Plateforme de gestion du centre de formation.</p>
 <p>Directeur général : Eugène Carlos</p>
 <p>Comptable : Louis Daphnine</p>
+<p>Seuil de réussite : 60/100</p>
 </section>
+
 <section id="students" class="hidden">
 <h2>Gestion des étudiants</h2>
 <input id="studentName" placeholder="Nom complet de l'étudiant">
@@ -48,6 +118,7 @@ input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
 <button class="action" onclick="addStudent()">Enregistrer l'étudiant</button>
 <div id="studentList"></div>
 </section>
+
 <section id="attendance" class="hidden">
 <h2>Registre de présence</h2>
 <input id="attendanceName" placeholder="Nom du membre du personnel">
@@ -59,13 +130,15 @@ input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
 <button class="action" onclick="addAttendance()">Enregistrer la présence</button>
 <div id="attendanceList"></div>
 </section>
+
 <section id="payments" class="hidden">
 <h2>Gestion des paiements</h2>
 <input id="paymentName" placeholder="Nom de l'étudiant">
-<input id="paymentAmount" type="number" placeholder="Montant payé">
+<input id="paymentAmount" type="number" min="0" placeholder="Montant payé">
 <button class="action" onclick="addPayment()">Enregistrer le paiement</button>
 <div id="paymentList"></div>
 </section>
+
 <section id="training" class="hidden">
 <h2>Formations</h2>
 <input id="trainingName" placeholder="Nom de la formation">
@@ -73,6 +146,7 @@ input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
 <button class="action" onclick="addTraining()">Ajouter une formation</button>
 <div id="trainingList"></div>
 </section>
+
 <section id="certificates" class="hidden">
 <h2>Certificats</h2>
 <input id="certificateName" placeholder="Nom de l'étudiant">
@@ -80,49 +154,16 @@ input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box}
 <button class="action" onclick="makeCertificate()">Créer un certificat</button>
 <div id="certificateResult"></div>
 </section>
+
 </main>
-<script>
-function show(id){
-document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
-document.getElementById(id).classList.remove('hidden');
-}
-function addStudent(){
-let n=document.getElementById('studentName').value;
-let p=document.getElementById('studentPhone').value;
-if(!n)return alert('Entrez le nom');
-document.getElementById('studentList').innerHTML+='<p>'+safe(n)+' — '+safe(p)+'</p>';
-document.getElementById('studentName').value='';
-document.getElementById('studentPhone').value='';
-}
-function addAttendance(){
-let n=document.getElementById('attendanceName').value;
-let r=document.getElementById('attendanceRole').value;
-if(!n)return alert('Entrez le nom');
-document.getElementById('attendanceList').innerHTML+='<p>'+safe(n)+' — '+safe(r)+' — Présent</p>';
-}
-function addPayment(){
-let n=document.getElementById('paymentName').value;
-let a=document.getElementById('paymentAmount').value;
-if(!n||!a)return alert('Remplissez les champs');
-document.getElementById('paymentList').innerHTML+='<p>'+safe(n)+' — '+safe(a)+'</p>';
-}
-function addTraining(){
-let n=document.getElementById('trainingName').value;
-let d=document.getElementById('trainingDuration').value;
-if(!n)return alert('Entrez la formation');
-document.getElementById('trainingList').innerHTML+='<p>'+safe(n)+' — '+safe(d)+'</p>';
-}
-function makeCertificate(){
-let n=document.getElementById('certificateName').value;
-let c=document.getElementById('certificateCourse').value;
-if(!n||!c)return alert('Remplissez les champs');
-document.getElementById('certificateResult').innerHTML='<h3>Certificat de réussite</h3><p>'+safe(n)+'</p><p>'+safe(c)+'</p><p>LEADHAÏTI</p><button onclick="window.print()">Imprimer</button>';
-}
-function safe(v){
-return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+
+<footer>
+<p>LEADHAÏTI — Formation • Discipline • Excellence</p>
+</footer>
 
 <script>
+"use strict";
+
 const STORAGE_KEY = "LEADHAITI_DATA_V1";
 
 let data = {
@@ -133,122 +174,232 @@ let data = {
   certificates: []
 };
 
-function loadData() {
-  try {
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g, function(c){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c];
+  });
+}
+
+function loadData(){
+  try{
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) data = {...data, ...JSON.parse(saved)};
-  } catch (error) {
+    if(saved){
+      const oldData = JSON.parse(saved);
+      data = {
+        students: Array.isArray(oldData.students) ? oldData.students : [],
+        attendance: Array.isArray(oldData.attendance) ? oldData.attendance : [],
+        payments: Array.isArray(oldData.payments) ? oldData.payments : [],
+        trainings: Array.isArray(oldData.trainings) ? oldData.trainings : [],
+        certificates: Array.isArray(oldData.certificates) ? oldData.certificates : []
+      };
+    }
+  }catch(error){
     alert("Impossible de lire les données sauvegardées.");
   }
 }
 
-function saveData() {
-  try {
+function saveData(){
+  try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    alert("Sauvegarde impossible. Vérifie l'espace disponible.");
+  }catch(error){
+    alert("Sauvegarde impossible. Vérifiez l'espace disponible.");
   }
 }
 
-function safe(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;",
-    '"':"&quot;", "'":"&#39;"
-  })[c]);
+function show(id){
+  document.querySelectorAll("main section").forEach(function(section){
+    section.classList.add("hidden");
+  });
+
+  const page = document.getElementById(id);
+  if(page){
+    page.classList.remove("hidden");
+  }
 }
 
-function show(id) {
-  document.querySelectorAll("main section").forEach(s =>
-    s.classList.add("hidden")
-  );
-  document.getElementById(id).classList.remove("hidden");
-}
+function render(){
 
-function render() {
   document.getElementById("studentList").innerHTML =
-    data.students.map(x => `<p>${safe(x.name)} — ${safe(x.phone)}</p>`).join("");
+    data.students.map(function(x){
+      return `<div class="item">
+        <strong>${safe(x.name)}</strong><br>
+        Téléphone : ${safe(x.phone)}
+      </div>`;
+    }).join("");
 
   document.getElementById("attendanceList").innerHTML =
-    data.attendance.map(x => `<p>${safe(x.name)} — ${safe(x.role)} — ${safe(x.date)}</p>`).join("");
+    data.attendance.map(function(x){
+      return `<div class="item">
+        ${safe(x.name)} — ${safe(x.role)}<br>
+        Date : ${safe(x.date)}
+      </div>`;
+    }).join("");
 
   document.getElementById("paymentList").innerHTML =
-    data.payments.map(x => `<p>${safe(x.name)} — ${safe(x.amount)}</p>`).join("");
+    data.payments.map(function(x){
+      return `<div class="item">
+        ${safe(x.name)} — Montant payé : ${safe(x.amount)}
+      </div>`;
+    }).join("");
 
   document.getElementById("trainingList").innerHTML =
-    data.trainings.map(x => `<p>${safe(x.name)} — ${safe(x.duration)}</p>`).join("");
+    data.trainings.map(function(x){
+      return `<div class="item">
+        <strong>${safe(x.name)}</strong><br>
+        Durée : ${safe(x.duration)}
+      </div>`;
+    }).join("");
 
   document.getElementById("certificateResult").innerHTML =
-    data.certificates.map(x =>
-      `<section><h3>Certificat de réussite</h3>
-      <p>${safe(x.name)}</p><p>${safe(x.course)}</p>
-      <p>LEADHAÏTI</p></section>`
-    ).join("");
+    data.certificates.map(function(x){
+      return `<div class="item">
+        <h3>Certificat de réussite</h3>
+        <p>Nous certifions que :</p>
+        <h2>${safe(x.name)}</h2>
+        <p>a suivi la formation :</p>
+        <strong>${safe(x.course)}</strong>
+        <p>LEADHAÏTI</p>
+        <button class="action no-print" onclick="printCertificate()">
+          Imprimer le certificat
+        </button>
+      </div>`;
+    }).join("");
 }
 
-function addStudent() {
+function addStudent(){
   const name = document.getElementById("studentName").value.trim();
   const phone = document.getElementById("studentPhone").value.trim();
-  if (!name) return alert("Entrez le nom de l'étudiant.");
-  data.students.push({name, phone});
-  saveData(); render();
+
+  if(!name){
+    alert("Entrez le nom de l'étudiant.");
+    return;
+  }
+
+  data.students.push({name:name, phone:phone});
+  saveData();
+  render();
+
   document.getElementById("studentName").value = "";
   document.getElementById("studentPhone").value = "";
+
+  alert("Étudiant enregistré.");
 }
 
-function addAttendance() {
+function addAttendance(){
   const name = document.getElementById("attendanceName").value.trim();
   const role = document.getElementById("attendanceRole").value;
-  if (!name) return alert("Entrez le nom.");
+
+  if(!name){
+    alert("Entrez le nom.");
+    return;
+  }
+
   data.attendance.push({
-    name, role, date: new Date().toLocaleString("fr-FR")
+    name:name,
+    role:role,
+    date:new Date().toLocaleString("fr-FR")
   });
-  saveData(); render();
+
+  saveData();
+  render();
+
   document.getElementById("attendanceName").value = "";
+  alert("Présence enregistrée.");
 }
 
-function addPayment() {
+function addPayment(){
   const name = document.getElementById("paymentName").value.trim();
   const amount = document.getElementById("paymentAmount").value;
-  if (!name || !amount || Number(amount) <= 0)
-    return alert("Entrez un nom et un montant valide.");
-  data.payments.push({name, amount});
-  saveData(); render();
+
+  if(!name || !amount || Number(amount) <= 0){
+    alert("Entrez un nom et un montant valide.");
+    return;
+  }
+
+  data.payments.push({
+    name:name,
+    amount:amount
+  });
+
+  saveData();
+  render();
+
   document.getElementById("paymentName").value = "";
   document.getElementById("paymentAmount").value = "";
+
+  alert("Paiement enregistré.");
 }
 
-function addTraining() {
+function addTraining(){
   const name = document.getElementById("trainingName").value.trim();
   const duration = document.getElementById("trainingDuration").value.trim();
-  if (!name) return alert("Entrez le nom de la formation.");
-  data.trainings.push({name, duration});
-  saveData(); render();
+
+  if(!name){
+    alert("Entrez le nom de la formation.");
+    return;
+  }
+
+  data.trainings.push({
+    name:name,
+    duration:duration
+  });
+
+  saveData();
+  render();
+
   document.getElementById("trainingName").value = "";
   document.getElementById("trainingDuration").value = "";
+
+  alert("Formation ajoutée.");
 }
 
-function makeCertificate() {
+function makeCertificate(){
   const name = document.getElementById("certificateName").value.trim();
   const course = document.getElementById("certificateCourse").value.trim();
-  if (!name || !course) return alert("Remplissez les champs.");
-  data.certificates.push({name, course});
-  saveData(); render();
+
+  if(!name || !course){
+    alert("Remplissez les champs.");
+    return;
+  }
+
+  data.certificates.push({
+    name:name,
+    course:course
+  });
+
+  saveData();
+  render();
+
+  document.getElementById("certificateName").value = "";
+  document.getElementById("certificateCourse").value = "";
+
+  alert("Certificat créé.");
 }
 
-function printCertificate() {
+function printCertificate(){
   window.print();
 }
 
+/* Initialisation de l'application */
 loadData();
 render();
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
+
+/* Enregistrement du service worker */
+if("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
     navigator.serviceWorker.register("./service-worker.js")
-      .catch(error => console.error("Erreur :", error));
+      .catch(function(error){
+        console.error("Erreur du service worker :", error);
+      });
   });
 }
 </script>
+
 </body>
 </html>
