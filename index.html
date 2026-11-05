@@ -119,6 +119,127 @@ document.getElementById('certificateResult').innerHTML='<h3>Certificat de réuss
 function safe(v){
 return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+<script>
+const STORAGE_KEY = "LEADHAITI_DATA_V1";
+
+let data = {
+  students: [],
+  attendance: [],
+  payments: [],
+  trainings: [],
+  certificates: []
+};
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) data = {...data, ...JSON.parse(saved)};
+  } catch (error) {
+    alert("Impossible de lire les données sauvegardées.");
+  }
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    alert("Sauvegarde impossible. Vérifie l'espace disponible.");
+  }
+}
+
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function show(id) {
+  document.querySelectorAll("main section").forEach(s =>
+    s.classList.add("hidden")
+  );
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function render() {
+  document.getElementById("studentList").innerHTML =
+    data.students.map(x => `<p>${safe(x.name)} — ${safe(x.phone)}</p>`).join("");
+
+  document.getElementById("attendanceList").innerHTML =
+    data.attendance.map(x => `<p>${safe(x.name)} — ${safe(x.role)} — ${safe(x.date)}</p>`).join("");
+
+  document.getElementById("paymentList").innerHTML =
+    data.payments.map(x => `<p>${safe(x.name)} — ${safe(x.amount)}</p>`).join("");
+
+  document.getElementById("trainingList").innerHTML =
+    data.trainings.map(x => `<p>${safe(x.name)} — ${safe(x.duration)}</p>`).join("");
+
+  document.getElementById("certificateResult").innerHTML =
+    data.certificates.map(x =>
+      `<section><h3>Certificat de réussite</h3>
+      <p>${safe(x.name)}</p><p>${safe(x.course)}</p>
+      <p>LEADHAÏTI</p></section>`
+    ).join("");
+}
+
+function addStudent() {
+  const name = document.getElementById("studentName").value.trim();
+  const phone = document.getElementById("studentPhone").value.trim();
+  if (!name) return alert("Entrez le nom de l'étudiant.");
+  data.students.push({name, phone});
+  saveData(); render();
+  document.getElementById("studentName").value = "";
+  document.getElementById("studentPhone").value = "";
+}
+
+function addAttendance() {
+  const name = document.getElementById("attendanceName").value.trim();
+  const role = document.getElementById("attendanceRole").value;
+  if (!name) return alert("Entrez le nom.");
+  data.attendance.push({
+    name, role, date: new Date().toLocaleString("fr-FR")
+  });
+  saveData(); render();
+  document.getElementById("attendanceName").value = "";
+}
+
+function addPayment() {
+  const name = document.getElementById("paymentName").value.trim();
+  const amount = document.getElementById("paymentAmount").value;
+  if (!name || !amount || Number(amount) <= 0)
+    return alert("Entrez un nom et un montant valide.");
+  data.payments.push({name, amount});
+  saveData(); render();
+  document.getElementById("paymentName").value = "";
+  document.getElementById("paymentAmount").value = "";
+}
+
+function addTraining() {
+  const name = document.getElementById("trainingName").value.trim();
+  const duration = document.getElementById("trainingDuration").value.trim();
+  if (!name) return alert("Entrez le nom de la formation.");
+  data.trainings.push({name, duration});
+  saveData(); render();
+  document.getElementById("trainingName").value = "";
+  document.getElementById("trainingDuration").value = "";
+}
+
+function makeCertificate() {
+  const name = document.getElementById("certificateName").value.trim();
+  const course = document.getElementById("certificateCourse").value.trim();
+  if (!name || !course) return alert("Remplissez les champs.");
+  data.certificates.push({name, course});
+  saveData(); render();
+}
+
+function printCertificate() {
+  window.print();
+}
+
+loadData();
+render();
 </script>
+
 </body>
 </html>
