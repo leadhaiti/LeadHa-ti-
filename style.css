@@ -1,77 +1,116 @@
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --navy: #102443;
+    --gold: #d4af37;
+    --white: #ffffff;
+    --background: #f3f5fa;
+    --text: #17243b;
+    --muted: #718096;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #17243b;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 95px;
 }
 
 header {
-    background: #102443;
-    color: white;
-    padding: 25px 20px;
+    background: linear-gradient(135deg, #102443, #1c3d68);
+    color: var(--white);
     text-align: center;
+    padding: 32px 20px;
+    border-bottom: 4px solid var(--gold);
 }
 
 header h1 {
-    color: #d4af37;
-    font-size: 27px;
+    color: var(--gold);
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
 header p {
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 2px;
 }
 
 .container {
-    padding: 20px;
-    padding-bottom: 100px;
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 22px 16px;
 }
 
 .welcome {
-    background: #ffffff;
-    padding: 22px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    background: linear-gradient(135deg, #102443, #254c79);
+    color: white;
+    padding: 28px 22px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(16,36,67,0.15);
 }
 
 .welcome h2 {
-    color: #102443;
-    margin-bottom: 10px;
+    color: var(--gold);
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.welcome p {
+    line-height: 1.6;
+    font-size: 14px;
+    margin-bottom: 20px;
 }
 
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    border-left: 4px solid #d4af37;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    padding: 22px;
+    border-radius: 17px;
+    margin-bottom: 16px;
+    border: 1px solid #e8ebf2;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 5px 15px rgba(16,36,67,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card h3 {
-    margin-bottom: 8px;
-    color: #102443;
+    color: var(--navy);
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 button {
-    background: #102443;
-    color: white;
+    background: var(--gold);
+    color: var(--navy);
     border: none;
-    padding: 13px 20px;
-    border-radius: 10px;
+    padding: 14px 22px;
+    border-radius: 12px;
     font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
 }
 
-button:hover {
-    background: #d4af37;
-    color: #102443;
+button:active {
+    transform: scale(0.97);
 }
 
 .bottom-nav {
@@ -79,28 +118,56 @@ button:hover {
     bottom: 0;
     left: 0;
     width: 100%;
+    min-height: 75px;
     background: white;
     display: flex;
+    align-items: center;
     justify-content: space-around;
-    padding: 13px 5px;
-    box-shadow: 0 -3px 15px rgba(0,0,0,0.1);
-    border-top: 2px solid #d4af37;
+    padding: 10px 5px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    border-top: 2px solid var(--gold);
+    box-shadow: 0 -5px 20px rgba(16,36,67,0.10);
+    z-index: 1000;
 }
 
 .bottom-nav a {
+    flex: 1;
     text-decoration: none;
-    color: #102443;
+    color: #8993a5;
     font-size: 12px;
+    font-weight: 600;
     text-align: center;
+    padding: 5px 2px;
 }
 
 .bottom-nav a.active {
-    color: #c49b25;
-    font-weight: bold;
+    color: var(--navy);
 }
 
 .bottom-nav span {
     display: block;
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 27px 15px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    .container {
+        padding: 18px 13px;
+    }
+
+    .welcome {
+        padding: 24px 18px;
+    }
+
+    .card {
+        padding: 19px;
+    }
 }
