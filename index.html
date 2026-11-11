@@ -5,64 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#102443">
+    <meta name="description" content="LEADHAÏTI - LEAD TRAINING CENTER. Learn, grow and build your future.">
+
     <title>LEADHAÏTI - LEAD TRAINING CENTER</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css?v=20261111">
 </head>
 
 <body>
 
-<header>
-    <h1>LEADHAÏTI</h1>
-    <p>LEAD TRAINING CENTER</p>
-</header>
+    <header>
+        <h1>LEADHAÏTI</h1>
+        <p>LEAD TRAINING CENTER</p>
+    </header>
 
-<main class="container">
+    <main class="container">
 
-    <section class="welcome">
-        <h2>Welcome to LEADHAÏTI</h2>
-        <p>Your future begins with quality education.</p>
-        <br>
-        <button onclick="location.href='#courses'">
-            Explore Courses
-        </button>
-    </section>
+        <section class="welcome">
+            <h2>Welcome to LEADHAÏTI</h2>
+            <p>Your future begins with quality education.</p>
 
-    <section class="card">
-        <h3>📚 Online Courses</h3>
-        <p>Access lessons, educational documents and videos.</p>
-    </section>
+            <button type="button"
+                onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
+                Explore Courses
+            </button>
+        </section>
 
-    <section class="card" id="courses">
-        <h3>📝 Online Exams</h3>
-        <p>Take examinations and follow your academic progress.</p>
-    </section>
+        <section class="card">
+            <h3>📚 Online Courses</h3>
+            <p>Access lessons, educational documents and videos.</p>
+        </section>
 
-    <section class="card">
-        <h3>🎓 Student Dashboard</h3>
-        <p>Manage your learning activities and progress.</p>
-    </section>
+        <section class="card" id="courses">
+            <h3>📝 Online Exams</h3>
+            <p>Take examinations and follow your academic progress.</p>
+        </section>
 
-    <section class="card">
-        <h3>📢 Announcements</h3>
-        <p>Stay informed about school activities and updates.</p>
-    </section>
+        <section class="card">
+            <h3>🎓 Student Dashboard</h3>
+            <p>Manage your learning activities and progress.</p>
+        </section>
 
-</main>
+        <section class="card">
+            <h3>📢 Announcements</h3>
+            <p>Stay informed about school activities and updates.</p>
+        </section>
 
-<nav class="bottom-nav">
-    <a href="#" class="active">
-        <span>⌂</span>Home
-    </a>
-    <a href="#courses">
-        <span>📚</span>Courses
-    </a>
-    <a href="#courses">
-        <span>📝</span>Exams
-    </a>
-    <a href="#">
-        <span>👤</span>Profile
-    </a>
-</nav>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+
+        <a href="#" class="active">
+            <span>⌂</span>Home
+        </a>
+
+        <a href="#courses">
+            <span>📚</span>Courses
+        </a>
+
+        <a href="#courses">
+            <span>📝</span>Exams
+        </a>
+
+        <a href="#">
+            <span>👤</span>Profile
+        </a>
+
+    </nav>
 
 </body>
 </html>
